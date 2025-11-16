@@ -2,42 +2,37 @@
 
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext'; // 1. Import useAuth
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  
+  // 2. Get the login function from the context
+  const { login } = useAuth();
 
-  // --- Handle Form Submission ---
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    // In a real app, you'd send this to your backend to verify.
-    console.log('Logging in with:', { email, password });
     
-    // Simulate a successful login
-    alert('Login successful! (Simulation)');
+    // 3. Call the login function
+    // (We're not using email/password for this simulation, but we would in a real app)
+    login();
     
-    // In a real app, you'd save a token and redirect
-    // For now, we'll just send them to their profile page.
-    navigate('/profile');
+    // 4. Send the user to their new dashboard
+    navigate('/dashboard');
   };
 
-  // --- Handle Google Sign-in Simulation ---
-  const handleGoogleLogin = () => {
-    // In a real app, this would trigger the Google OAuth flow.
-    alert('Google Login feature is coming soon!');
-  };
-
+  // ... (rest of your component is the same)
   return (
     <div className="container mx-auto px-6 lg:px-8 py-12">
       <div className="max-w-md mx-auto bg-white p-8 rounded-lg shadow-md">
         
-        {/* --- Form Title --- */}
         <h1 className="text-3xl font-serif font-bold text-zinc-800 text-center mb-6">
           Log in to Vanity
         </h1>
 
-        {/* --- Login Form --- */}
+        {/* 4. Make sure your form calls handleLogin */}
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email Address</label>
@@ -78,37 +73,9 @@ const LoginPage: React.FC = () => {
             </button>
           </div>
         </form>
-
-        {/* --- Divider --- */}
-        <div className="flex items-center my-6">
-          <div className="flex-grow border-t border-gray-300"></div>
-          <span className="mx-4 flex-shrink text-gray-500">Or</span>
-          <div className="flex-grow border-t border-gray-300"></div>
-        </div>
-
-        {/* --- Google Login Button --- */}
-        <button
-          onClick={handleGoogleLogin}
-          className="w-full flex items-center justify-center px-6 py-3 bg-white border border-gray-300 rounded-md shadow-sm text-base font-medium text-gray-700 hover:bg-gray-50"
-        >
-          <img 
-            className="h-5 w-5 mr-3" 
-            src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" 
-            alt="Google logo"
-          />
-          Log in with Google
-        </button>
-
-        {/* --- Register Link --- */}
-        <div className="text-center mt-6">
-          <p className="text-sm text-gray-600">
-            Don't have an account?{' '}
-            <Link to="/register" className="font-medium text-zinc-600 hover:text-zinc-800">
-              Create an account
-            </Link>
-          </p>
-        </div>
-
+        
+        {/* ... (rest of the page: Google login, Register link) ... */}
+        
       </div>
     </div>
   );
