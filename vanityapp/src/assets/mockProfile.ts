@@ -6,7 +6,7 @@ export const mockProfileData = {
   phone: '(123) 456-7890',
   email: 'jane.doe@example.com',
   address: '123 Main St, Anytown, USA, 12345',
-  role: 'Retailer',
+  role: 'Admin',
   businessName: 'Design Co. Interiors',
   businessCategory: 'Interior Design',
   orders: [

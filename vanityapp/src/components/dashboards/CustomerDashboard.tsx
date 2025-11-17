@@ -1,20 +1,16 @@
 // src/components/dashboards/CustomerDashboard.tsx
 
 import React from 'react';
+import { Link } from 'react-router-dom'; // 1. Import Link
 import { useAuth } from '../../context/AuthContext';
-// 1. We no longer need the direct import of mockProfileData
-// import { mockProfileData } from '../../assets/mockProfile'; 
 
 const CustomerDashboard: React.FC = () => {
-  // 2. This 'user' variable is now used
   const { user } = useAuth(); 
 
-  // 3. Add a loading check
   if (!user || !user.orders) {
     return <div>Loading orders...</div>;
   }
   
-  // 4. Get the orders from the dynamic user object
   const orders = user.orders;
 
   return (
@@ -23,7 +19,12 @@ const CustomerDashboard: React.FC = () => {
       <div className="space-y-4">
         {orders.length > 0 ? (
           orders.map(order => (
-            <div key={order.orderId} className="flex justify-between items-center p-4 border rounded-md">
+            // 2. Change the <div> to a <Link>
+            <Link
+              key={order.orderId}
+              to={`/order/${order.orderId}`}
+              className="flex justify-between items-center p-4 border rounded-md hover:bg-gray-50 transition-colors"
+            >
               <div>
                 <p className="font-semibold text-zinc-800">Order #{order.orderId}</p>
                 <p className="text-sm text-gray-500">Date: {order.date}</p>
@@ -36,7 +37,7 @@ const CustomerDashboard: React.FC = () => {
                   {order.status}
                 </p>
               </div>
-            </div>
+            </Link>
           ))
         ) : (
           <p>You have no recent orders.</p>

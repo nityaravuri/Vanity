@@ -16,6 +16,12 @@ import CartPage from './pages/CartPage';
 import ProtectedRoute from './components/ProtectedRoute';
 import DashboardPage from './pages/DashboardPage';
 import AddProductPage from './pages/AddProductPage';
+import EditProductPage from './pages/EditProductPage';
+import OrderDetailsPage from './pages/OrderDetailsPage';
+import CheckoutPage from './pages/CheckoutPage';
+import AddWholesaleProductPage from './pages/AddWholesaleProductPage';
+import WholesaleMarketplacePage from './pages/WholesaleMarketplacePage';
+import B2BCartPage from './pages/B2BCartPage';
 
 
 function App() {
@@ -60,6 +66,54 @@ function App() {
             element={
               <ProtectedRoute>
                 <AddProductPage />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/dashboard/products/edit/:productId" 
+            element={
+              <ProtectedRoute>
+                <EditProductPage />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/order/:orderId" 
+            element={
+              <ProtectedRoute>
+                <OrderDetailsPage />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/checkout" 
+            element={
+              <ProtectedRoute>
+                <CheckoutPage />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/dashboard/wholesale-products/new" 
+            element={
+              <ProtectedRoute>
+                <AddWholesaleProductPage />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/wholesale-marketplace" 
+            element={
+              <ProtectedRoute>
+                <WholesaleMarketplacePage />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/b2b-cart" 
+            element={
+              <ProtectedRoute>
+                <B2BCartPage />
               </ProtectedRoute>
             } 
           />

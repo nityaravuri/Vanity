@@ -3,6 +3,7 @@
 import React from 'react';
 import { mockBulkOrders } from '../../data/mockWholesalerData';
 import { Truck, CheckCircle } from 'lucide-react';
+import WholesaleProductManagement from './WholesaleProductManagement.tsx';
 
 const WholesalerDashboard: React.FC = () => {
   const orders = mockBulkOrders;
@@ -58,10 +59,7 @@ const WholesalerDashboard: React.FC = () => {
       </div>
 
       {/* 2. Bulk Product Catalog (Placeholder) */}
-      <div className="bg-white p-6 rounded-lg shadow-md">
-        <h3 className="text-xl font-semibold mb-4">Manage Bulk Catalog</h3>
-        <p>A list of your products available for bulk purchase would go here...</p>
-      </div>
+      <WholesaleProductManagement />
     </div>
   );
 };

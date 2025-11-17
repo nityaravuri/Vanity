@@ -62,3 +62,39 @@ export const mockCustomerQueries = [
     status: 'Replied',
   },
 ];
+
+export const mockRetailerOrders = [
+  {
+    orderId: 'o-123',
+    customerName: 'Alice Smith',
+    date: '2025-11-15',
+    total: 899.99,
+    status: 'Pending',
+  },
+  {
+    orderId: 'o-124',
+    customerName: 'Charlie Brown',
+    date: '2025-11-14',
+    total: 1299.99,
+    status: 'Pending',
+  },
+  {
+    orderId: 'o-125',
+    customerName: 'Bob Johnson',
+    date: '2025-11-13',
+    total: 799.99,
+    status: 'Shipped',
+  },
+];
+
+export const mockFinanceData = {
+  availableBalance: 4250.75,
+  pendingBalance: 1299.99,
+  nextPayoutDate: '2025-11-20',
+  recentTransactions: [
+    { id: 'tr-1', date: '2025-11-15', description: 'Payout to bank account', amount: -5000.00, type: 'Payout' },
+    { id: 'tr-2', date: '2025-11-14', description: 'Sale (Order o-125)', amount: 799.99, type: 'Sale' },
+    { id: 'tr-3', date: '2025-11-13', description: 'Sale (Order o-124)', amount: 1299.99, type: 'Pending' },
+    { id: 'tr-4', date: '2025-11-12', description: 'Sale (Order o-123)', amount: 899.99, type: 'Sale' },
+  ]
+};
