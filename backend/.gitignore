@@ -1,0 +1,40 @@
+# Node modules
+node_modules/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Build output
+dist/
+build/
+
+# Temporary
+*.tmp
+*.temp
+
+# OS files
+.DS_Store
+
+# IDE files
+.vscode/
+.idea/
+
+# Coverage
+coverage/
+
+# Local runtime files
+*.pid
+*.seed
+*.pid.lock
+
+# Optional: Ignore Firebase/Google creds (if added later)
+*.key.json
+service-account.json

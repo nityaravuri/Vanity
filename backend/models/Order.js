@@ -1,25 +1,44 @@
 import mongoose from "mongoose";
 
-const orderSchema = new mongoose.Schema({
-  customer: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-  retailer: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-  wholesaler: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+const orderSchema = new mongoose.Schema(
+  {
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
 
-  items: [
-    {
-      product: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
-      quantity: Number
-    }
-  ],
+    products: [
+      {
+        product: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Product",
+          required: true,
+        },
+        quantity: { type: Number, required: true },
+      },
+    ],
 
-  totalPrice: Number,
-  status: {
-    type: String,
-    enum: ["placed", "processing", "shipped", "delivered"],
-    default: "placed"
+    orderType: {
+      type: String,
+      enum: ["online", "offline"],
+      default: "online",
+    },
+
+    // For offline appointment
+    appointmentDate: {
+      type: Date,
+      default: null,
+    },
+
+    totalAmount: {
+      type: Number,
+      required: true,
+    },
+
+    status: {
+      type: String,
+      enum: ["Pending", "Accepted", "Packed", "Shipped", "Delivered"],
+      default: "Pending",
+    },
   },
-
-  createdAt: { type: Date, default: Date.now }
-});
+  { timestamps: true }
+);
 
 export default mongoose.model("Order", orderSchema);

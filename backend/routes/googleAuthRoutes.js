@@ -1,14 +1,14 @@
 import express from "express";
+import { googleAuthCallback } from "../controllers/googleAuthController.js";
 
 const router = express.Router();
 
-// Google OAuth start (handled by frontend redirect)
-router.get("/google", (req, res) => {
+router.get("/", (req, res) => {
   const redirectUrl =
     "https://accounts.google.com/o/oauth2/v2/auth?" +
     new URLSearchParams({
       client_id: process.env.GOOGLE_CLIENT_ID,
-      redirect_uri: "http://localhost:5001/api/auth/google/callback",
+      redirect_uri: process.env.GOOGLE_REDIRECT_URI,
       response_type: "code",
       scope: "email profile",
       access_type: "offline",
@@ -17,5 +17,8 @@ router.get("/google", (req, res) => {
 
   res.redirect(redirectUrl);
 });
+
+// Callback route
+router.get("/callback", googleAuthCallback);
 
 export default router;

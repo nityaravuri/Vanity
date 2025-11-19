@@ -1,11 +1,24 @@
 import mongoose from "mongoose";
 
-const feedbackSchema = new mongoose.Schema({
-  product: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
-  user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-  rating: Number,
-  comment: String,
-  createdAt: { type: Date, default: Date.now }
-});
+const feedbackSchema = new mongoose.Schema(
+  {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+
+    productId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Product",
+      required: true,
+    },
+
+    rating: { type: Number, required: true, min: 1, max: 5 },
+
+    comment: { type: String, default: "" }
+  },
+  { timestamps: true }
+);
 
 export default mongoose.model("Feedback", feedbackSchema);

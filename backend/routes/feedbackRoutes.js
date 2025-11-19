@@ -1,15 +1,10 @@
 import express from "express";
+import { addFeedback, getAllFeedback } from "../controllers/feedbackController.js";
 import { protect } from "../middleware/authMiddleware.js";
-import { allowRoles } from "../middleware/roleMiddleware.js";
-import {
-  addFeedback,
-  getFeedbackForProduct
-} from "../controllers/feedbackController.js";
 
 const router = express.Router();
 
-router.post("/add", protect, allowRoles("customer"), addFeedback);
-
-router.get("/:id", getFeedbackForProduct);
+router.post("/", protect, addFeedback);
+router.get("/", getAllFeedback);
 
 export default router;

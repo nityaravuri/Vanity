@@ -2,24 +2,18 @@ import Feedback from "../models/Feedback.js";
 
 export const addFeedback = async (req, res) => {
   try {
-    const fb = await Feedback.create({
-      product: req.body.product,
-      user: req.user.id,
-      rating: req.body.rating,
-      comment: req.body.comment
-    });
-
-    res.json({ message: "Feedback submitted", fb });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+    const feedback = await Feedback.create(req.body);
+    res.status(201).json(feedback);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 };
 
-export const getFeedbackForProduct = async (req, res) => {
+export const getAllFeedback = async (req, res) => {
   try {
-    const feedback = await Feedback.find({ product: req.params.id }).populate("user");
+    const feedback = await Feedback.find();
     res.json(feedback);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 };

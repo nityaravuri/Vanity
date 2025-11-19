@@ -1,22 +1,38 @@
 import jwt from "jsonwebtoken";
+import User from "../models/User.js";
 
-export const protect = (req, res, next) => {
+// MAIN middleware
+export const authMiddleware = async (req, res, next) => {
   try {
-    // Authorization header format: "Bearer token"
-    const token = req.headers.authorization?.split(" ")[1];
+    const header = req.headers.authorization;
 
-    if (!token) {
-      return res.status(401).json({ error: "Access denied. No token provided." });
+    if (!header || !header.startsWith("Bearer ")) {
+      return res.status(401).json({ error: "Not authorized" });
     }
 
-    // Verify token
+    const token = header.split(" ")[1];
+
+    // verify token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    // Store user info from token in req.user
-    req.user = decoded;
-
-    next(); // Continue to the protected route
-  } catch (err) {
-    return res.status(401).json({ error: "Invalid or expired token." });
+    req.user = { id: decoded.id, role: decoded.role };
+    next();
+  } catch (error) {
+    res.status(401).json({ error: "Token invalid or expired" });
   }
+};
+
+// ALIAS so older routes using "protect" ALSO work
+export const protect = authMiddleware;
+
+// ROLE-BASED ACCESS
+export const authorizeRoles = (...allowedRoles) => {
+  return (req, res, next) => {
+    if (!allowedRoles.includes(req.user.role)) {
+      return res
+        .status(403)
+        .json({ error: "Access denied: insufficient permissions" });
+    }
+    next();
+  };
 };

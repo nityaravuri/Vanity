@@ -1,36 +1,18 @@
 import express from "express";
-import { protect } from "../middleware/authMiddleware.js";
-import { allowRoles } from "../middleware/roleMiddleware.js";
-import {
-  addProduct,
-  getProducts,
-  updateProduct,
-  deleteProduct
+import { 
+  getProducts, 
+  getProductById, 
+  createProduct 
 } from "../controllers/productController.js";
+
+import { protect } from "../middleware/authMiddleware.js";
+import { authorizeRoles } from "../middleware/roleMiddleware.js";
 
 const router = express.Router();
 
 router.get("/", getProducts);
+router.get("/:id", getProductById);
 
-router.post(
-  "/add",
-  protect,
-  allowRoles("retailer", "wholesaler"),
-  addProduct
-);
-
-router.put(
-  "/update/:id",
-  protect,
-  allowRoles("retailer", "wholesaler"),
-  updateProduct
-);
-
-router.delete(
-  "/delete/:id",
-  protect,
-  allowRoles("retailer", "wholesaler"),
-  deleteProduct
-);
+router.post("/", protect, authorizeRoles("Wholesaler", "Admin"), createProduct);
 
 export default router;

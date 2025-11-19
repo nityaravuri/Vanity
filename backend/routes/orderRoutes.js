@@ -1,26 +1,33 @@
 import express from "express";
-import { protect } from "../middleware/authMiddleware.js";
-import { allowRoles } from "../middleware/roleMiddleware.js";
 import {
   placeOrder,
-  getOrdersByUser,
-  updateOrderStatus
+  getAllOrders,
+  getUserOrders,
+  getOrderById,
+  updateOrderStatus,
+  getOfflineOrders,
 } from "../controllers/orderController.js";
+
+import { authMiddleware } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-// customer places order
-router.post("/place", protect, allowRoles("customer"), placeOrder);
+// Place order (online/offline)
+router.post("/", authMiddleware, placeOrder);
 
-// customer sees order history
-router.get("/my-orders", protect, allowRoles("customer"), getOrdersByUser);
+// Get all orders
+router.get("/", getAllOrders);
 
-// retailer/wholesaler updates status
-router.put(
-  "/update-status/:id",
-  protect,
-  allowRoles("retailer", "wholesaler"),
-  updateOrderStatus
-);
+// Get orders of ONE USER
+router.get("/user/:userId", getUserOrders);
+
+// Get offline appointments for logged in user
+router.get("/offline/me", authMiddleware, getOfflineOrders);
+
+// Update order status
+router.put("/:id/status", updateOrderStatus);
+
+// Get a single order
+router.get("/:id", getOrderById);
 
 export default router;
