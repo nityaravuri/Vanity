@@ -1,27 +1,23 @@
 // src/pages/LoginPage.tsx
 
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+//import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext'; // 1. Import useAuth
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
   
   // 2. Get the login function from the context
   const { login } = useAuth();
 
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    // 3. Call the login function
-    // (We're not using email/password for this simulation, but we would in a real app)
-    login();
-    
-    // 4. Send the user to their new dashboard
-    navigate('/dashboard');
-  };
+  const handleLogin = async (e: { preventDefault: () => void; }) => {
+  e.preventDefault(); // Prevents page reload
+  
+  // This is where 'email' and 'password' are passed to AuthContext
+  await login(email, password); 
+};
 
   // ... (rest of your component is the same)
   return (
